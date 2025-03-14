@@ -1,25 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
 
-function App() {
+function Square({value, onSqureClick }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <button className="square" onClick={onSquareClick}>
+      {value}
+    </button>
   );
 }
 
-export default App;
+function Board({xIsNext, squares,onPlay}) {
+  function handleClick(i) {
+    if (calculateWinner(sqaures) || sqaures[i]) {
+      return;
+      }
+      const nextSquares = squares.slice();
+      if(xIsNext) {
+        nextSqaures[i] = 'X';
+      } else {
+        nextSquares[i] = 'O';
+      }
+      onPlay(nextSquares);
+    }
+    const winner = calculateWinner(squares);
+    let status;
+    if (winner) {
+      status = 'Winner:' + winner;
+    }else {
+      status = 'Next player:' +(xIsNext ? 'X' : 'O');
+    }
+    return (
+      <>
+      <div className="status">{status}</div>
+      <div className="board-row">
+        <Square value={sqaures[0]} onSquaresClick={() => handleClick(0)}/>
+        <Square value={sqaures[1]} onSquaresClick={() => handleClick(1)}/>
+        <Square value={sqaures[2]} onSquaresClick={() => handleClick(2)}/>
+      </div>
+      <div className="board-row">
+      <Square value={sqaures[3]} onSquaresClick={() => handleClick(3)}/>
+        <Square value={sqaures[4]} onSquaresClick={() => handleClick(4)}/>
+        <Square value={sqaures[5]} onSquaresClick={() => handleClick(5)}/>
+      </div>
+      <div className="board-row">
+        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
+        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
+        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+      </div>
+    </>
+    );
+  }
+  export default function Game() {
+    
+  }
+}
